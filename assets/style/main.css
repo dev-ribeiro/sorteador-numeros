@@ -34,8 +34,28 @@ main{
 }
 
 .draw_panel{
-    border: 1px solid black;
     width: 50%;
+    padding: 5%;
+    display: grid;
+    gap: 1%;
+    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr/ 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    font-size: 20px;
+    color: white;
+    background-color: rgb(160, 121, 255);
+    border-radius: 20px;
+}
+
+.draw_panel div{
+    display: flex;
+    align-items: center;
+}
+
+.draw_panel h3{
+    padding: 2%;
+    background-color: rgb(127, 96, 204);
+    border-radius: 50%;
+    font-size: 20px;
 }
 
 .handleResults{
@@ -44,19 +64,38 @@ main{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    border: 1px solid black;
+    align-items: center;
 }
 
 .raffle{
-    width: 80%;
-    height: 20px;
-    border: 1px solid black;
+    padding: 5%;
+    color: white;
+    background-color: rgb(111, 84, 178);
+    border: none;
+    border-radius: 10px;
 }
 
 .last_results{
-    width: 80%;
-    height: 20px;
-    border: 1px solid black;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template: 1fr / 1fr 1fr 1fr;
+}
+
+.last_results div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.last_results h3{
+    display: flex;
+    padding: 5%;
+    justify-content: space-around;
+    color: white;
+    background-color: rgb(127, 96, 204);
+    border-radius: 50%;
+    
 }
 
 footer{
