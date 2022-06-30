@@ -93,7 +93,7 @@ main{
     padding: 5%;
     justify-content: space-around;
     color: white;
-    background-color: rgb(127, 96, 204);
+    background-color: #7f60cc;
     border-radius: 50%;
     
 }
@@ -101,4 +101,30 @@ main{
 footer{
     display: flex;
     justify-content: space-around;
+}
+
+/* Modal */
+.modal{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.593);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal button{
+    padding: 20px;
+    font-size: 20px;
+    border: none;
+    border-radius: 50%;
+    background-color: #7f60cc;
+    color: white;
+}
+
+.hideModal{
+    display: none;
 }
