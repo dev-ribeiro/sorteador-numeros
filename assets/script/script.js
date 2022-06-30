@@ -1,36 +1,35 @@
-const draw_panel = document.getElementById("draw_panel");
+const drawPanel = document.getElementById("drawPanel");
+const handleResults = document.getElementById("handleResults");
+const raffle = document.getElementById("raffle");
 const drawValues = [];
 
 onload = () => {
-    interface.checkInitializeToken()
-    interface.checkDrawValuesToken()
-}
+    checkToken.checkInitializeToken();
+};
 
 const interface = {
 
-    checkInitializeToken() {
-        if (!tokens.initializeGame) { this.createModal() }
+    async handleInitialDrawPanel() {
+        await app.setDrawPanel();
+        this.createContentDrawPanel(app.drawValues);
     },
 
-    checkDrawValuesToken() {
-        if (!tokens.drawValues) { this.createContentDrawPanel() }
+    loadPreviusState(){
+        this.createContentDrawPanel(JSON.parse(tokens.createdDrawValues));
+        this.handleStates()
     },
 
-    createContentDrawPanel() {
-        let values;
-        if (tokens.drawValues) {
-            values = JSON.parse(tokens.drawValues);
-            for (let i = 0;i < values.length;i++) {
-                draw_panel.appendChild(`<div id="${values.id}" class="${values.selected == false ? "notSelected" : "selected"}">${values.num}</div>`)
-            }
-        }
+    handleStates(){
+        raffle.addEventListener("click",console.log("1"))
     },
 
-    createDrawPanel() {
-        for (let num = 1; num <= 60; num++) {
-            drawValues.push({ num: num, id: "pick" + num, selected: false });
-        }
-        app.setDrawValues(drawValues);
+    createContentDrawPanel(values) {
+        values.forEach(element => {
+            let div = document.createElement("div");
+            div.className = element.id;
+            div.innerHTML = element.value;
+            drawPanel.appendChild(div);
+        });
     },
 
     createModal() {
@@ -46,11 +45,26 @@ const interface = {
 
     hideModal(btn, element) {
         btn.addEventListener("click", () => {
-            element.className = "hideModal"
+            element.className = "hideModal";
+            let moment = new Date;
+            app.initializeGame(moment.getTime().toString());
+            checkToken.checkDrawValuesToken()
         });
-        let moment = new Date;
-        app.initializeGame(moment.getTime().toString())
-        this.checkDrawValuesToken()
     }
 
+};
+
+const checkToken = {
+
+    checkInitializeToken() {
+        if (!tokens.initializeGame) {
+            interface.createModal()
+        } else {
+            interface.loadPreviusState()
+        }
+    },
+
+    checkDrawValuesToken() {
+        if (!tokens.createdDrawValues) { interface.handleInitialDrawPanel() } else { console.log("Sem o token de criação dos valores") }
+    }
 };
