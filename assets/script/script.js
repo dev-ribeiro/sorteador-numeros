@@ -1,33 +1,38 @@
 const drawPanel = document.getElementById("drawPanel");
 const handleResults = document.getElementById("handleResults");
 const raffle = document.getElementById("raffle");
-const drawValues = [];
 
 onload = () => {
     checkToken.checkInitializeToken();
+    raffle.addEventListener("click", interface.selectRandomValue)
 };
 
 const interface = {
 
-    async handleInitialDrawPanel() {
+    handleInitialDrawPanel: async () => {
         await app.setDrawPanel();
-        this.createContentDrawPanel(app.drawValues);
+        try {
+            let content = JSON.parse(localStorage.getItem(keys.DRAW_VALUES));
+            interface.createContentDrawPanel(content)
+        } catch (error) {
+            console.log(error)
+        }
     },
 
-    loadPreviusState(){
+    loadPreviusState() {
         this.createContentDrawPanel(JSON.parse(tokens.createdDrawValues));
-        this.handleStates()
     },
 
-    handleStates(){
-        raffle.addEventListener("click",console.log("1"))
+    selectRandomValue: ()=> {
+        app.draw()
     },
 
     createContentDrawPanel(values) {
         values.forEach(element => {
             let div = document.createElement("div");
-            div.className = element.id;
+            div.className = `${element.id} select_${element.select}`;
             div.innerHTML = element.value;
+            div.addEventListener("click", (event) => { this.changeStateToSelected(div) })
             drawPanel.appendChild(div);
         });
     },
@@ -65,6 +70,10 @@ const checkToken = {
     },
 
     checkDrawValuesToken() {
-        if (!tokens.createdDrawValues) { interface.handleInitialDrawPanel() } else { console.log("Sem o token de criação dos valores") }
+        if (!tokens.createdDrawValues) {
+            interface.handleInitialDrawPanel()
+        } else {
+            console.log("Sem o token de criação dos valores")
+        }
     }
 };

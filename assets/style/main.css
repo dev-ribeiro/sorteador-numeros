@@ -49,11 +49,20 @@ main{
     border-radius: 20px;
 }
 
-.drawPanel div{
+.select_false{
     display: flex;
     align-items: center;
     padding: 5px;
     background-color: rgb(127, 96, 204);
+    border-radius: 50%;
+    font-size: 15px;
+}
+
+.select_true{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background-color: red;
     border-radius: 50%;
     font-size: 15px;
 }
