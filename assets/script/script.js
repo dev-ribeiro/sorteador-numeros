@@ -1,13 +1,21 @@
 const drawPanel = document.getElementById("drawPanel");
 const handleResults = document.getElementById("handleResults");
 const raffle = document.getElementById("raffle");
+const acessDrawValues = JSON.parse(tokens.createdDrawValues);
 
 onload = () => {
     checkToken.checkInitializeToken();
-    raffle.addEventListener("click", interface.selectRandomValue)
+    raffle.addEventListener("click", interface.updateStateToSelected)
 };
 
 const interface = {
+
+    updateStateToSelected: async () => {
+        let selected = await app.draw();
+        selected.select = true;
+        app.setDrawPanel();
+        interface.updateContentDrawPanel(selected.id)
+    },
 
     handleInitialDrawPanel: async () => {
         await app.setDrawPanel();
@@ -20,19 +28,23 @@ const interface = {
     },
 
     loadPreviusState() {
-        this.createContentDrawPanel(JSON.parse(tokens.createdDrawValues));
+        this.createContentDrawPanel(acessDrawValues);
     },
 
-    selectRandomValue: ()=> {
+    selectRandomValue: () => {
         app.draw()
+    },
+
+    updateContentDrawPanel(selected){
+        let select = document.querySelector(`.class${selected}`);
+        select.className = "select_true";
     },
 
     createContentDrawPanel(values) {
         values.forEach(element => {
             let div = document.createElement("div");
-            div.className = `${element.id} select_${element.select}`;
+            div.className = `class${element.id} select_false`
             div.innerHTML = element.value;
-            div.addEventListener("click", (event) => { this.changeStateToSelected(div) })
             drawPanel.appendChild(div);
         });
     },
@@ -65,6 +77,7 @@ const checkToken = {
         if (!tokens.initializeGame) {
             interface.createModal()
         } else {
+            drawValues = acessDrawValues;
             interface.loadPreviusState()
         }
     },

@@ -1,4 +1,4 @@
-const drawValues = [];
+var drawValues = [];
 
 for (let num = 1; num <= 60; num++) {
     drawValues.push({ id: num, value: num, select: false })
@@ -21,15 +21,13 @@ const app = {
     },
 
     setDrawPanel: async function () {
-        console.log(drawValues);
         localStorage.setItem(keys.DRAW_VALUES, JSON.stringify(drawValues))
     },
 
     draw: async () => {
-        let index = await Math.floor(Math.random() * (60 - 1) + 1);
-        let found = drawValues.find((value) => { (value.id == index) && (value.select == false) });
-        console.log(found)
-
+        let index = await Math.floor(Math.random() * (60 - 0) + 1);
+        let found = drawValues.find((value) => { return value.id == index && value.select == false });
+        return found
     },
 
     // updateStateToSelected: async (element) => {
