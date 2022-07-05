@@ -1,7 +1,12 @@
 var drawValues = [];
 
 for (let num = 1; num <= 60; num++) {
-    drawValues.push({ id: num, value: num, select: false })
+    if(num < 10) {
+        drawValues.push({ id: num, value: "0" + num, select: false })
+    } else {
+        drawValues.push({ id: num, value: num, select: false })
+    }
+    
 }
 
 const keys = {

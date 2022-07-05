@@ -43,7 +43,11 @@ const interface = {
     createContentDrawPanel(values) {
         values.forEach(element => {
             let div = document.createElement("div");
-            div.className = `class${element.id} select_false`
+            if(element.select == false) {
+                div.className = `class${element.id} select_false`
+            } else {
+                div.className = `class${element.id} select_true`
+            }
             div.innerHTML = element.value;
             drawPanel.appendChild(div);
         });
