@@ -10,18 +10,36 @@ onload = () => {
 
 const interface = {
 
+    handleGameOver(){
+        app.setGameOver()
+        if(gameOver = true){
+            interface.clearDrawPanel();
+            checkToken.checkInitializeToken();
+        }
+    },
+
+    clearDrawPanel(){
+        drawPanel.innerHTML = ''
+    },
+
     updateStateToSelected: async () => {
         let selected = await app.draw();
-        selected.select = true;
-        app.setDrawPanel();
-        interface.updateContentDrawPanel(selected.id)
+        if (selected) {
+            selected.select = true;
+            app.setDrawPanel();
+            interface.updateContentDrawPanel(selected.id);
+        } else {
+            interface.handleGameOver();
+        }
+
+
     },
 
     handleInitialDrawPanel: async () => {
         await app.setDrawPanel();
         try {
-            let content = JSON.parse(localStorage.getItem(keys.DRAW_VALUES));
-            interface.createContentDrawPanel(content)
+            // let content = JSON.parse(localStorage.getItem(keys.DRAW_VALUES));
+            interface.createContentDrawPanel(drawValues)
         } catch (error) {
             console.log(error)
         }
@@ -31,11 +49,11 @@ const interface = {
         this.createContentDrawPanel(acessDrawValues);
     },
 
-    selectRandomValue: () => {
-        app.draw()
-    },
+    // selectRandomValue: () => {
+    //     app.draw()
+    // },
 
-    updateContentDrawPanel(selected){
+    updateContentDrawPanel(selected) {
         let select = document.querySelector(`.class${selected}`);
         select.className = "select_true";
     },
@@ -43,7 +61,7 @@ const interface = {
     createContentDrawPanel(values) {
         values.forEach(element => {
             let div = document.createElement("div");
-            if(element.select == false) {
+            if (element.select == false) {
                 div.className = `class${element.id} select_false`
             } else {
                 div.className = `class${element.id} select_true`
@@ -79,7 +97,8 @@ const checkToken = {
 
     checkInitializeToken() {
         if (!tokens.initializeGame) {
-            interface.createModal()
+            app.createArray();
+            interface.createModal();
         } else {
             drawValues = acessDrawValues;
             interface.loadPreviusState()

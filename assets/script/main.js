@@ -1,12 +1,13 @@
 var drawValues = [];
+var gameOver = false;
 
-for (let num = 1; num <= 60; num++) {
-    if(num < 10) {
+for (let num = 1; num <= 10; num++) {
+    if (num < 10) {
         drawValues.push({ id: num, value: "0" + num, select: false })
     } else {
         drawValues.push({ id: num, value: num, select: false })
     }
-    
+
 }
 
 const keys = {
@@ -21,29 +22,53 @@ const tokens = {
 
 const app = {
 
+    createArray: () => {
+        for (let num = 1; num <= 10; num++) {
+            if (num < 10) {
+                drawValues.push({ id: num, value: "0" + num, select: false })
+            } else {
+                drawValues.push({ id: num, value: num, select: false })
+            }
+        }
+    },
+
     initializeGame(moment) {
         localStorage.setItem(keys.INITIALIZE_GAME, JSON.stringify(moment));
+    },
+
+    createArrayValues() {
+        for (let num = 1; num <= 10; num++) {
+            if (num < 10) {
+                drawValues.push({ id: num, value: "0" + num, select: false })
+            } else {
+                drawValues.push({ id: num, value: num, select: false })
+            }
+
+        }
     },
 
     setDrawPanel: async function () {
         localStorage.setItem(keys.DRAW_VALUES, JSON.stringify(drawValues))
     },
 
+    validateDrawValue: async () => {
+        let validate = drawValues.filter(value => { return value.select == false });
+        let index = await Math.floor(Math.random() * validate.length);
+        return validate[index]
+    },
+
     draw: async () => {
-        let index = await Math.floor(Math.random() * (60 - 0) + 1);
-        let found = drawValues.find((value) => { return value.id == index && value.select == false });
-        return found
+        let validate = await app.validateDrawValue()
+        let result = drawValues.find(element => element == validate);
+        return result
     },
 
-    // updateStateToSelected: async (element) => {
-    //     let index = await app.draw();
-    //     let found = drawValues.find((value) => value.id == index)
+    gameOver: false,
 
-    // },
-
-    controlValuesStates() {
-        localStorage.setItem(keys.DRAW_VALUES, this.drawValues)
-    },
-
+    setGameOver: async () => {
+        await localStorage.clear();
+        drawValues = [];
+        gameOver = true;
+    }
 
 };
