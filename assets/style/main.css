@@ -5,9 +5,8 @@
 
 body{
     margin: auto;
-    /* height: 100vh; */
     max-width: 600px;
-    background-color: aliceblue;
+    background-color: rgb(250, 208, 252);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -24,7 +23,7 @@ header{
 }
 
 header img{
-    width: 50px;
+    width: 75px;
 }
 
 main{
@@ -110,8 +109,23 @@ main{
 }
 
 footer{
+    margin-top: 50px;
+    padding: 10px;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    border-radius: 20px;
+    background-color: rgb(111, 84, 178);
+    color: white;
+}
+
+.contact ul{
+    list-style: none;
+}
+
+.contact a{
+    text-decoration: none;
+    color: white;
 }
 
 /* Modal */
@@ -123,8 +137,30 @@ footer{
     top: 0;
     left: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.controller{
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7f60cc;
+}
+
+.controller label{
+    font-size: 20px;
+    color: white;
+}
+
+.controller input{
+    margin-left: 10px;
+    width: 50px;
+    background-color: black;
+    color: white;
 }
 
 .modal button{
