@@ -38,7 +38,6 @@ const interface = {
     handleInitialDrawPanel: async () => {
         await app.setDrawPanel();
         try {
-            // let content = JSON.parse(localStorage.getItem(keys.DRAW_VALUES));
             interface.createContentDrawPanel(drawValues)
         } catch (error) {
             console.log(error)
@@ -48,10 +47,6 @@ const interface = {
     loadPreviusState() {
         this.createContentDrawPanel(acessDrawValues);
     },
-
-    // selectRandomValue: () => {
-    //     app.draw()
-    // },
 
     updateContentDrawPanel(selected) {
         let select = document.querySelector(`.class${selected}`);
@@ -74,17 +69,28 @@ const interface = {
     createModal() {
         let body = document.getElementsByTagName("body")[0];
         let modal = document.createElement("div");
-        let button = document.createElement("button")
-        modal.className = "modal"
+        let controller = document.createElement("div");
+        let button = document.createElement("button");
+        let label = document.createElement("label");
+        let input = document.createElement("input");
+        modal.className = "modal";
+        input.setAttribute("id","defineContent");
+        input.setAttribute("type","number")
+        controller.className = "controller";
+        label.innerHTML = "Defina a quantidade de números que deseja incluir no sorteio:";
         button.innerHTML = "Iniciar";
+        controller.appendChild(label);
+        controller.appendChild(input);
+        modal.appendChild(controller);
         modal.appendChild(button);
         body.appendChild(modal)
-        this.hideModal(button, modal)
+        this.hideModal(button, modal, input)
     },
 
-    hideModal(btn, element) {
+    hideModal(btn, element, content) {
         btn.addEventListener("click", () => {
             element.className = "hideModal";
+            app.createArray(content.value);
             let moment = new Date;
             app.initializeGame(moment.getTime().toString());
             checkToken.checkDrawValuesToken()
@@ -97,7 +103,6 @@ const checkToken = {
 
     checkInitializeToken() {
         if (!tokens.initializeGame) {
-            app.createArray();
             interface.createModal();
         } else {
             drawValues = acessDrawValues;

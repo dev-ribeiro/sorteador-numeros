@@ -1,15 +1,6 @@
 var drawValues = [];
 var gameOver = false;
 
-for (let num = 1; num <= 10; num++) {
-    if (num < 10) {
-        drawValues.push({ id: num, value: "0" + num, select: false })
-    } else {
-        drawValues.push({ id: num, value: num, select: false })
-    }
-
-}
-
 const keys = {
     INITIALIZE_GAME: "INIT",
     DRAW_VALUES: "DRAW",
@@ -22,8 +13,8 @@ const tokens = {
 
 const app = {
 
-    createArray: () => {
-        for (let num = 1; num <= 10; num++) {
+    createArray: (limit) => {
+        for (let num = 1; num <= limit; num++) {
             if (num < 10) {
                 drawValues.push({ id: num, value: "0" + num, select: false })
             } else {
